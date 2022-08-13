@@ -1,6 +1,7 @@
 import os
 import sys
 import requests
+from tqdm import tqdm
 import json
 
 APIKey = ""
@@ -47,14 +48,19 @@ def sendUrlRequest(urlRequest):
     return data.json()
 
 def getVideoInformations(urlRequest):
+    print("Downloading Video Informations")
     reqData = sendUrlRequest(urlRequest)
     result = reqData["items"][0]
 
     return result
+
 def getVideoRating(urlRequest):
+    print("Downloading Rating")
     reqData = sendUrlRequest(urlRequest)
     return reqData
+
 def getAllComments(urlRequest):
+    print("Downloading Comments")
     reqData = sendUrlRequest(urlRequest)
 
     baseURL = str(urlRequest)
@@ -137,12 +143,14 @@ class fileSaving:
         file = open(fileName, "w")
         file.write(self.__jsonData)
         file.close()
+        print("Video Data Saved")
 
     def saveThumbnail(self):
         thumbnailName = self.__nc.createThumbnailName()
         thumbnail = open(thumbnailName, "wb")
         thumbnail.write(self.__thumbnailData)
         thumbnail.close()
+        print("Thumbnail saved")
 
 def downloadCommentsAndInfo():
     ID = getVideoID(videoLink)
@@ -171,6 +179,7 @@ def downloadCommentsAndInfo():
     fs.createFilesContainer()
     fs.saveDataToFile()
     fs.saveThumbnail()
+    print("Everything was saved in directory called: '"+title+" - Data'")
 
 def configurationPreperations():
     global APIKey
