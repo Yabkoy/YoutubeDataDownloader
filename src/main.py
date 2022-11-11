@@ -89,10 +89,10 @@ def getTitleFromVideoInformations(videoInformations):
     return title
 
 def transformDataToJson(informations, ratings, commentsCount, comments):
-    videoDump = """"informations":"""+json.dumps(informations)
-    ratingsDump = """"ratings":"""+json.dumps(ratings)
-    commentsCount = """"commentsCount":"""+json.dumps(commentsCount)
-    commentsDump = """"comments":"""+json.dumps(comments)
+    videoDump = """"informations":"""+json.dumps(informations, ensure_ascii=False)
+    ratingsDump = """"ratings":"""+json.dumps(ratings, ensure_ascii=False)
+    commentsCount = """"commentsCount":"""+json.dumps(commentsCount, ensure_ascii=False)
+    commentsDump = """"comments":"""+json.dumps(comments, ensure_ascii=False)
 
 
     completeJson = "{"+videoDump+", "+ratingsDump+", "+commentsCount+","+commentsDump+"}"
@@ -139,7 +139,7 @@ class fileSaving:
 
     def saveDataToFile(self):
         fileName = self.__nc.createFileName()
-        file = open(fileName, "w")
+        file = open(fileName, "w", encoding='utf-8')
         file.write(self.__jsonData)
         file.close()
         print("Video Data Saved")
